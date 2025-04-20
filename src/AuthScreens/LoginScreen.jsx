@@ -25,7 +25,7 @@ const LoginScreen = ({navigation}) => {
       // Store token in AsyncStorage
 
       // Show success alert and navigate
-      Alert.alert('Login Successful', 'Welcome back to !', [
+      Alert.alert('Login Successful', 'Welcome back !', [
         {text: 'OK', onPress: () => navigation.navigate('HomeTabs')},
       ]);
     } catch (error) {

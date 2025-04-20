@@ -1,29 +1,32 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Image, Alert } from "react-native";
-import { TextInput, Button, Text, Card } from "react-native-paper";
-import auth from "@react-native-firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, {useState} from 'react';
+import {View, StyleSheet, Image, Alert} from 'react-native';
+import {TextInput, Button, Text, Card} from 'react-native-paper';
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const LoginScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleLogin = async () => {
     setLoading(true);
-    setErrorMessage("");
+    setErrorMessage('');
 
     try {
-      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+      const userCredential = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
       const token = await userCredential.user.getIdToken(); // Get token
-      console.log("User Token:", token);
-      await AsyncStorage.setItem("subbuToken", token); 
+      console.log('User Token:', token);
+      await AsyncStorage.setItem('subbuToken', token);
       // Store token in AsyncStorage
 
       // Show success alert and navigate
-      Alert.alert("Login Successful", "Welcome back!", [
-        { text: "OK", onPress: () => navigation.navigate("HomeTabs") },
+      Alert.alert('Login Successful', 'Welcome back to !', [
+        {text: 'OK', onPress: () => navigation.navigate('HomeTabs')},
       ]);
     } catch (error) {
       setErrorMessage(error.message);
@@ -34,12 +37,14 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/Login.jpg")} style={styles.image} />
+      <Image source={require('../assets/Login.jpg')} style={styles.image} />
 
       <Card style={styles.card}>
         <Card.Title title="Login" titleStyle={styles.title} />
         <Card.Content>
-          {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+          {errorMessage ? (
+            <Text style={styles.error}>{errorMessage}</Text>
+          ) : null}
 
           <TextInput
             label="Email"
@@ -59,13 +64,19 @@ const LoginScreen = ({ navigation }) => {
             style={styles.input}
           />
 
-          <Button mode="contained" loading={loading} onPress={handleLogin} style={styles.button}>
+          <Button
+            mode="contained"
+            loading={loading}
+            onPress={handleLogin}
+            style={styles.button}>
             Login
           </Button>
 
           <Text style={styles.signupText}>
-            Don't have an account?{" "}
-            <Text style={styles.signupLink} onPress={() => navigation.navigate("Signup")}>
+            Don't have an account?{' '}
+            <Text
+              style={styles.signupLink}
+              onPress={() => navigation.navigate('Signup')}>
               Sign up
             </Text>
           </Text>
@@ -80,13 +91,13 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
     padding: 20,
   },
   card: {
-    width: "100%",
+    width: '100%',
     padding: 15,
     borderRadius: 10,
     elevation: 3,
@@ -94,12 +105,12 @@ const styles = StyleSheet.create({
   image: {
     width: 350,
     height: 350,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   title: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   input: {
     marginBottom: 10,
@@ -108,17 +119,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   error: {
-    color: "red",
+    color: 'red',
     marginBottom: 10,
   },
   signupText: {
     marginTop: 15,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 14,
-    color: "#666",
+    color: '#666',
   },
   signupLink: {
-    color: "#007BFF",
-    fontWeight: "bold",
+    color: '#007BFF',
+    fontWeight: 'bold',
   },
 });
